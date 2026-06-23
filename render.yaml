@@ -1,0 +1,13 @@
+# Render blueprint — one free Web Service that builds the React client and runs
+# the Node/Socket.io server (which serves both the app and the websocket on the
+# same port). Deploy via Render → New → Blueprint, point it at this repo.
+services:
+  - type: web
+    name: survey-says
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.19.5
