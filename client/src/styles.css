@@ -1,0 +1,351 @@
+:root {
+  --bg: #0a1733;
+  --bg2: #122452;
+  --panel: #16285c;
+  --gold: #ffd24a;
+  --gold-deep: #f5a623;
+  --blue: #2f6fff;
+  --green: #27c08a;
+  --text: #eaf0ff;
+  --muted: #9fb0d6;
+  --danger: #ff5d6c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  background: radial-gradient(circle at 50% -10%, var(--bg2), var(--bg) 60%);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.screen {
+  min-height: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 18px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.loading {
+  font-size: 1.4rem;
+  color: var(--muted);
+}
+
+/* ---------- Login ---------- */
+.login-card {
+  width: min(420px, 92vw);
+  background: var(--panel);
+  border: 1px solid #2a3e7d;
+  border-radius: 18px;
+  padding: 30px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.login-title {
+  text-align: center;
+  font-weight: 900;
+  letter-spacing: 3px;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.title-survey {
+  font-size: 2.4rem;
+  color: var(--gold);
+}
+.title-says {
+  font-size: 2.4rem;
+  color: var(--text);
+}
+.login-sub {
+  text-align: center;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.field input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #32468a;
+  background: #0e1c44;
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+}
+.field input:focus {
+  border-color: var(--gold);
+}
+
+.btn-primary {
+  margin-top: 6px;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
+  color: #20180a;
+  font-weight: 800;
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.login-error {
+  background: rgba(255, 93, 108, 0.15);
+  border: 1px solid var(--danger);
+  color: #ffd2d6;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+.login-hint {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand {
+  font-weight: 900;
+  letter-spacing: 2px;
+  font-size: 1.3rem;
+}
+.brand span {
+  color: var(--gold);
+}
+.qmeta {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.host-tag {
+  background: var(--gold);
+  color: #20180a;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+.host-tag.you {
+  background: var(--green);
+  color: #06231a;
+}
+.tag-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-logout {
+  background: transparent;
+  border: 1px solid #32468a;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.btn-logout:hover {
+  border-color: var(--gold);
+  color: var(--text);
+}
+
+/* ---------- Question ---------- */
+.question-bar {
+  background: linear-gradient(180deg, var(--blue), #1d4fd0);
+  border-radius: 14px;
+  padding: 22px 24px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- Board status line ---------- */
+.board-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 0.95rem;
+  padding: 0 2px;
+}
+.board-total {
+  font-weight: 800;
+  color: var(--gold);
+}
+
+/* ---------- Board ---------- */
+.board {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 720px) {
+  .board {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 2px solid #2c4a93;
+  background: #0e1c44;
+  color: var(--text);
+  font-size: 1.15rem;
+  text-align: left;
+  width: 100%;
+  transition: transform 0.08s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.slot.host {
+  cursor: pointer;
+}
+.slot.host:hover {
+  border-color: var(--gold);
+}
+.slot.host:active {
+  transform: scale(0.99);
+}
+.slot.revealed {
+  background: linear-gradient(180deg, #1f8f68, var(--green));
+  border-color: #2fe3a4;
+}
+/* On the host screen, cards not yet opened to guests look dimmed + dashed. */
+.slot.host.hidden-from-guests {
+  opacity: 0.78;
+  border-style: dashed;
+}
+
+.slot-rank {
+  flex: 0 0 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #0a1733;
+  border: 2px solid #3a559e;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.slot.revealed .slot-rank {
+  background: #fff;
+  color: #06231a;
+  border-color: #fff;
+}
+.slot-text {
+  flex: 1;
+  font-weight: 700;
+}
+.slot-blank {
+  letter-spacing: 4px;
+  color: var(--muted);
+  font-weight: 800;
+}
+.slot-points {
+  flex: 0 0 auto;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 10px;
+  border-radius: 8px;
+  background: var(--gold);
+  color: #20180a;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+}
+/* Small host-only status pill on each card. */
+.slot-eye {
+  flex: 0 0 auto;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  background: rgba(10, 23, 51, 0.55);
+  border-radius: 20px;
+  padding: 3px 9px;
+}
+.slot.revealed .slot-eye {
+  color: #06231a;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.host-help {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 2px 0 0;
+}
+
+/* ---------- Host controls ---------- */
+.host-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 6px;
+}
+.btn {
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 2px solid #32468a;
+  background: var(--panel);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.btn:hover {
+  border-color: var(--gold);
+}
+.btn-accent {
+  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
+  color: #20180a;
+  border-color: transparent;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--muted);
+}
