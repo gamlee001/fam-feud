@@ -1,0 +1,18 @@
+# Nixpacks build config for Railway. Pins Node 20 and the monorepo build/start
+# so the React client (client/) is built and the Node/Socket.io server (server/)
+# serves it on one port. NOTE: this only applies when Railway builds from the
+# repo root — clear the service's "Root Directory" setting (don't set it to
+# "server"), or this file is never seen.
+providers = ["node"]
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "npm-9_x"]
+
+[phases.install]
+cmds = ["npm install --include=dev"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npm start"
