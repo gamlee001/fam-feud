@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { socket } from "./socket";
-import { playReveal, unlockAudio } from "./sound";
+import { playReveal, playWrong, unlockAudio } from "./sound";
 import Login from "./components/Login.jsx";
 import HostView from "./components/HostView.jsx";
 import GuestView from "./components/GuestView.jsx";
@@ -33,9 +33,11 @@ export default function App() {
   const [me, setMe] = useState(saved?.me || null); // { role, name }
   const [state, setState] = useState(null); // authoritative game state from server
   const [connected, setConnected] = useState(socket.connected);
+  const [striking, setStriking] = useState(false); // transient "wrong answer" flash
 
   // Refs so the long-lived socket listeners always read the latest values.
   const credsRef = useRef(saved?.creds || null);
+  const strikeTimer = useRef(null);
   const meRef = useRef(me);
   meRef.current = me;
 
@@ -63,11 +65,19 @@ export default function App() {
     const onDisconnect = () => setConnected(false);
     const onState = (s) => setState(s);
     const onRevealSound = () => playReveal();
+    // Wrong answer: buzz, then flash the red ✗ over hidden cards for a beat.
+    const onWrongAnswer = () => {
+      playWrong();
+      setStriking(true);
+      if (strikeTimer.current) clearTimeout(strikeTimer.current);
+      strikeTimer.current = setTimeout(() => setStriking(false), 1100);
+    };
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
     socket.on("state", onState);
     socket.on("reveal-sound", onRevealSound);
+    socket.on("wrong-answer", onWrongAnswer);
 
     // Cover the race where the socket connected before this effect ran (the
     // "connect" event would have already fired and been missed). This is what
@@ -84,6 +94,8 @@ export default function App() {
       socket.off("disconnect", onDisconnect);
       socket.off("state", onState);
       socket.off("reveal-sound", onRevealSound);
+      socket.off("wrong-answer", onWrongAnswer);
+      if (strikeTimer.current) clearTimeout(strikeTimer.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -111,6 +123,13 @@ export default function App() {
   }
 
   if (me.role === "host")
-    return <HostView state={state} onLogout={handleLogout} />;
-  return <GuestView state={state} me={me} onLogout={handleLogout} />;
+    return <HostView state={state} striking={striking} onLogout={handleLogout} />;
+  return (
+    <GuestView
+      state={state}
+      me={me}
+      striking={striking}
+      onLogout={handleLogout}
+    />
+  );
 }

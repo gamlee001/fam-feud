@@ -1,12 +1,13 @@
 import { socket } from "../socket";
 import Board from "./Board.jsx";
 
-export default function HostView({ state, onLogout }) {
+export default function HostView({ state, striking, onLogout }) {
   const toggle = (i) => socket.emit("toggle-answer", i);
   const revealAll = () => socket.emit("reveal-all");
   const hideAll = () => socket.emit("hide-all");
   const next = () => socket.emit("next-question");
   const prev = () => socket.emit("prev-question");
+  const wrongAnswer = () => socket.emit("wrong-answer");
 
   return (
     <div className="screen host">
@@ -35,7 +36,7 @@ export default function HostView({ state, onLogout }) {
         <span className="board-total">{state.revealedPoints} pts on the board</span> */}
       </div>
 
-      <Board answers={state.answers} onToggle={toggle} />
+      <Board answers={state.answers} onToggle={toggle} striking={striking} />
 
       <div className="host-controls">
         <button className="btn" onClick={prev}>
@@ -46,6 +47,9 @@ export default function HostView({ state, onLogout }) {
         </button>
         <button className="btn btn-ghost" onClick={hideAll}>
           Hide all
+        </button>
+        <button className="btn btn-danger" onClick={wrongAnswer}>
+          ✗ Wrong answer
         </button>
         <button className="btn" onClick={next}>
           Next ▶

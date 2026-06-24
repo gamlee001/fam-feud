@@ -218,6 +218,7 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
+  perspective: 1000px; /* gives the reveal flip a touch of real depth */
 }
 @media (min-width: 720px) {
   .board {
@@ -226,6 +227,7 @@ body {
 }
 
 .slot {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -251,6 +253,76 @@ body {
 .slot.revealed {
   background: linear-gradient(180deg, #1f8f68, var(--green));
   border-color: #2fe3a4;
+  /* Flip up into view with an overshoot and a green glow flash. */
+  animation: revealPop 0.55s cubic-bezier(0.22, 1.3, 0.4, 1);
+}
+@keyframes revealPop {
+  0% {
+    transform: rotateX(-90deg) scale(0.9);
+    box-shadow: 0 0 0 rgba(47, 227, 164, 0);
+  }
+  55% {
+    transform: rotateX(0deg) scale(1.05);
+    box-shadow: 0 0 34px rgba(47, 227, 164, 0.85);
+  }
+  100% {
+    transform: rotateX(0deg) scale(1);
+    box-shadow: 0 0 0 rgba(47, 227, 164, 0);
+  }
+}
+
+/* ---- Wrong answer: red shake + big ✗ over the still-hidden cards ---- */
+.slot.strike {
+  background: linear-gradient(180deg, #b3242f, var(--danger));
+  border-color: var(--danger);
+  animation: strikeShake 0.5s ease both;
+}
+@keyframes strikeShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(-9px);
+  }
+  30% {
+    transform: translateX(9px);
+  }
+  45% {
+    transform: translateX(-6px);
+  }
+  60% {
+    transform: translateX(6px);
+  }
+  78% {
+    transform: translateX(-3px);
+  }
+}
+.slot-x {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+  animation: strikeXpop 0.45s cubic-bezier(0.2, 1.5, 0.35, 1) both;
+}
+@keyframes strikeXpop {
+  0% {
+    transform: scale(0) rotate(-30deg);
+    opacity: 0;
+  }
+  55% {
+    transform: scale(1.35) rotate(8deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
 }
 /* On the host screen, cards not yet opened to guests look dimmed + dashed. */
 .slot.host.hidden-from-guests {
@@ -348,4 +420,12 @@ body {
 .btn-ghost {
   background: transparent;
   color: var(--muted);
+}
+.btn-danger {
+  background: linear-gradient(180deg, #ff6b78, #d6303f);
+  color: #fff;
+  border-color: transparent;
+}
+.btn-danger:hover {
+  border-color: #fff;
 }

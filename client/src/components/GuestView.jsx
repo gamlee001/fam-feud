@@ -3,7 +3,7 @@ import Board from "./Board.jsx";
 // The guest is a pure spectator. There are no controls and no buzzers — the
 // board simply mirrors whatever the host has chosen to reveal, in real time.
 // Every unrevealed answer shows as a blank card until the host opens it.
-export default function GuestView({ state, me, onLogout }) {
+export default function GuestView({ state, me, striking, onLogout }) {
   return (
     <div className="screen guest">
       <header className="topbar">
@@ -32,7 +32,7 @@ export default function GuestView({ state, me, onLogout }) {
       </div>
 
       {/* No onToggle prop -> read-only, blank cards until the host reveals them. */}
-      <Board answers={state.answers} />
+      <Board answers={state.answers} striking={striking} />
 
       {/* <p className="host-help">
         Watching live — answers appear as the host reveals them.

@@ -121,8 +121,19 @@ io.on("connection", (socket) => {
     hostOnly((index) => {
       if (index < 0 || index >= game.revealed.length) return;
       game.revealed[index] = !game.revealed[index];
-      io.emit("reveal-sound"); // a little "ding" on every screen
+      // Only celebrate when a card is opened, not when it is hidden again.
+      if (game.revealed[index]) io.emit("reveal-sound");
       broadcastState();
+    })
+  );
+
+  // Contestant gave an answer that isn't on the board. This changes no game
+  // state — it's a transient cue: every screen buzzes and flashes a red ✗ over
+  // the still-hidden cards (those answers are still valid, just not this guess).
+  socket.on(
+    "wrong-answer",
+    hostOnly(() => {
+      io.emit("wrong-answer");
     })
   );
 
