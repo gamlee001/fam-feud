@@ -37,12 +37,6 @@ export default function HostView({ state, onLogout }) {
 
       <Board answers={state.answers} onToggle={toggle} />
 
-      <p className="host-help">
-        Click a card to flip it open for the guests — its answer pops onto every
-        viewer's screen. Click again to hide it. Guests never see a card until
-        you open it.
-      </p>
-
       <div className="host-controls">
         <button className="btn" onClick={prev}>
           ◀ Prev
