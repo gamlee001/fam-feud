@@ -25,18 +25,18 @@ export default function GuestView({ state, me, onLogout }) {
       <div className="question-bar">{state.questionText}</div>
 
       <div className="board-status">
-        <span>
+        {/* <span>
           {state.revealedCount} / {state.answerCount} revealed
         </span>
-        <span className="board-total">{state.revealedPoints} pts on the board</span>
+        <span className="board-total">{state.revealedPoints} pts on the board</span> */}
       </div>
 
       {/* No onToggle prop -> read-only, blank cards until the host reveals them. */}
       <Board answers={state.answers} />
 
-      <p className="host-help">
+      {/* <p className="host-help">
         Watching live — answers appear as the host reveals them.
-      </p>
+      </p> */}
     </div>
   );
 }

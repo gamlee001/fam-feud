@@ -34,7 +34,7 @@ export default function Board({ answers, onToggle }) {
             )}
             {isHost && (
               <span className="slot-eye" aria-hidden="true">
-                {a.revealed ? "👁 shown" : "🙈 hidden"}
+                {a.revealed ? "👁" : "🙈"}
               </span>
             )}
           </button>

@@ -29,10 +29,10 @@ export default function HostView({ state, onLogout }) {
       <div className="question-bar">{state.questionText}</div>
 
       <div className="board-status">
-        <span>
+        {/* <span>
           {state.revealedCount} / {state.answerCount} revealed
         </span>
-        <span className="board-total">{state.revealedPoints} pts on the board</span>
+        <span className="board-total">{state.revealedPoints} pts on the board</span> */}
       </div>
 
       <Board answers={state.answers} onToggle={toggle} />
